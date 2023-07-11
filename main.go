@@ -1,6 +1,10 @@
 package main
 
-import "golang_web/cmd"
+import (
+	"fmt"
+	"golang_web/cmd"
+	"golang_web/utils"
+)
 
 // @title Go-Web开发案例
 // @version 0.0.1
@@ -8,4 +12,17 @@ import "golang_web/cmd"
 func main() {
 	defer cmd.Clean()
 	cmd.Start()
+
+	token, _ := utils.GenerateToken(1, "zs")
+	fmt.Println(token)
+
+	/*iJwtCostClaims, err := utils.ParseToken(token + "skfjksfjksjfk")
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	fmt.Println(iJwtCostClaims)*/
+
+	fmt.Println(utils.IsTokenValid(token))
+	fmt.Println(utils.IsTokenValid(token + "skfjksjfksjfk"))
 }
