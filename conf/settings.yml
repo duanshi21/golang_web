@@ -1,2 +1,8 @@
+mode:
+  develop: true
 server:
   port: 8090
+log:
+  MaxSize: 10 # 日志文件最大占用存储空间（M），超限后开始自动分割
+  MaxBackups: 10 # 保留旧文件的最大个数
+  MaxAge: 90 # 保留旧文件的最大天数
