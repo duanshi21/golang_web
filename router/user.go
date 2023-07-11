@@ -2,16 +2,18 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
+	"golang_web/api"
 	"net/http"
 )
 
 func InitUserRoutes() {
 	ResistRoute(func(rgPublic *gin.RouterGroup, rgAuth *gin.RouterGroup) {
-		rgPublic.POST("/local", func(ctx *gin.Context) {
-			ctx.AbortWithStatusJSON(http.StatusOK, gin.H{
-				"msg": "Login Success",
-			})
-		})
+		userApi := api.NewUserApi()
+		rgPublic = rgPublic.Group("user")
+		{
+			rgPublic.POST("/login", userApi.Login)
+		}
+
 		rgAuthUser := rgAuth.Group("user")
 		rgAuthUser.GET("", func(ctx *gin.Context) {
 			ctx.AbortWithStatusJSON(http.StatusOK, gin.H{
