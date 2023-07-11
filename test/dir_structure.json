@@ -1,0 +1,21 @@
+{
+  "name":"",
+  "children":[
+    {"name":"api"},
+    {"name":"cmd"},
+    {"name":"conf"},
+    {"name":"dao"},
+    {"name":"global"},
+    {"name":"log"},
+    {"name":"middleware"},
+    {"name":"model"},
+    {"name":"router"},
+    {
+      "name":"service",
+      "children":[
+        {"name":"dto"}
+      ]
+    },
+    {"name":"utils"}
+  ]
+}
