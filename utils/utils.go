@@ -1,0 +1,12 @@
+package utils
+
+import "fmt"
+
+func AppendError(existErr, newErr error) error {
+	if existErr == nil {
+
+	}
+
+	return fmt.Errorf("%v, %v", existErr, newErr)
+
+}
