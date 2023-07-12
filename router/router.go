@@ -9,6 +9,7 @@ import (
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	_ "golang_web/docs"
+	"golang_web/middleware"
 	"strings"
 )
 
@@ -30,6 +31,8 @@ func ResistRoute(fn IFnRegisterRoute) {
 func InitRouter() {
 	// 初始化gin框架，并注册相关路由
 	r := gin.Default()
+	// 跨域支持
+	r.Use(middleware.Cors())
 	rgPublic := r.Group("/api/v1/public") // 公开
 	rgAuth := r.Group("/api/v1")          // 鉴权
 
