@@ -7,6 +7,11 @@ import (
 	"golang_web/utils"
 )
 
+const (
+	ERR_CODE_ADD_USER = 10001
+	ERR_CODE_GET_USER = 10002
+)
+
 type UserApi struct {
 	BaseApi
 	Service *service.UserService
@@ -65,4 +70,45 @@ func (m UserApi) Login(c *gin.Context) {
 	//OK(c, ResponseJson{
 	//	Msg: "Login Failure",
 	//})
+}
+
+func (m UserApi) AddUser(c *gin.Context) {
+	var iUserAddDTO dto.UserAddDTO
+	if err := m.BuildRequest(BuildRequestOption{Ctx: c, DTO: &iUserAddDTO}).GetError(); err != nil {
+
+	}
+	err := m.Service.AddUser(&iUserAddDTO)
+
+	if err != nil {
+		m.ServerFail(ResponseJson{
+			Code: ERR_CODE_ADD_USER,
+			Msg:  err.Error(),
+		})
+		return
+	}
+	m.OK(ResponseJson{
+		Data: iUserAddDTO,
+	})
+}
+
+func (m UserApi) GetUserById(c *gin.Context) {
+	var iCommonIDDTO dto.CommonIDDTO
+	if err := m.BuildRequest(BuildRequestOption{
+		Ctx:               c,
+		DTO:               &iCommonIDDTO,
+		BindParamsFromUri: true}).GetError(); err != nil {
+		return
+	}
+	iUser, err := m.Service.GetUserById(&iCommonIDDTO)
+	if err != nil {
+		m.ServerFail(ResponseJson{
+			Code: ERR_CODE_GET_USER,
+			Msg:  err.Error(),
+		})
+		return
+	}
+
+	m.OK(ResponseJson{
+		Data: iUser,
+	})
 }
